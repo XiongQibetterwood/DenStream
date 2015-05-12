@@ -1,27 +1,41 @@
-mu = zeros(3,2160);
-for i = 1 : 180
-    x = 20*sin(i*pi/90)+20;
-    y = 20*cos(i*pi/90)+20;
-    z = 20;
-    mu(:,3*i-1) = [x y z];
-end;
-for j = 1 : 180
-    x = j/2+10;
-    y = j/3+10;
-    z = j/4+10;
-    mu(:,3*j-2) = [x y z];
+mu = zeros(3,1);
+DATA = zeros(200000 , 3);
+for time = 1 : 20
+    for i = 1 : 60
+        x = (21-time)*sin(i*pi/30)+21-time;
+        y = (21-time)*cos(i*pi/30)+21-time;
+        z = 21-time;
+        mu(:,i+(time-1)*200) = [x y z];
+    end;
+    for j = 1 : 60
+        x = j/2+15;
+        y = j/3+15;
+        z = j/4+15;
+    mu(:,60+j+(time-1)*200) = [x y z];
+    end
+    for k = 1 : 60
+        x = sin(k);
+        y = k/2;
+        z = 30;
+        mu(:,120+k+(time-1)*200) = [x y z];
+    end
+    for i = 1 : 20
+        x = i+time;
+        y = sqrt(i);
+        z = 0;
+        mu(:,180+i+(time-1)*200) = [x y z];
+    end
 end
-for k = 1 : 180
-    x = sin(k);
-    y = k/2;
-    z = 20;
-    mu(:,3*k) = [x y z];
-end
-for i = 1 : 10
-    for j = 540*i+1 : 540*i+540
-    mu(:,i) = mu(:,j-540)/2+[i;i;i];
-end
-
-
 mu = mu';
-plot3(mu(:,1),mu(:,2),mu(:,3),'r.','MarkerSize',0.5); 
+
+for i = 1 : 4000
+    MU = mu(i,:) ;
+    SIGMA = [1 0 0 ; 0 1 0 ; 0 0 1] ;
+    DATA( (i*50 - 49): (i*50), :) = mvnrnd(MU,SIGMA,50);
+end
+for i = 1:20
+    index = (i-1)*10000 + randperm(10000);
+    ind_old = ((i-1)*10000+1):(i*10000);
+    DATA(ind_old , :) = DATA(index , :);
+end
+plot3(DATA(1:1000,1),DATA(1:1000,2),DATA(1:1000,3),'r.','MarkerSize',0.5);
