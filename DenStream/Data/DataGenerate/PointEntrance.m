@@ -1,4 +1,5 @@
-function[point] = PointEntrance(DATA)
+function[point] = PointEntrance(sigma)
+DATA = DotGenerate(sigma);
 point.Coordinate = zeros(1000 , 3);
 point.Time = zeros(1000 , 1);
 point.Natural_Cluster_Name = zeros(1000 , 1);

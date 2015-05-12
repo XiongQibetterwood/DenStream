@@ -1,3 +1,4 @@
+function[DATA] = DotGenerate(sigma)
 mu = zeros(3,1);
 DATA.Coordinate = zeros(200000 , 3);
 DATA.Time = reshape(ones(1000,1)*(1:200),200000,1);
@@ -32,7 +33,7 @@ mu = mu';
 
 for i = 1 : 4000
     MU = mu(i,:) ;
-    SIGMA = [1 0 0 ; 0 1 0 ; 0 0 1] ;
+    SIGMA = [sigma 0 0 ; 0 sigma 0 ; 0 0 sigma] ;
     DATA.Coordinate( (i*50 - 49): (i*50), :) = mvnrnd(MU,SIGMA,50);
 end
 for i = 1:20
@@ -42,10 +43,10 @@ for i = 1:20
     DATA.Natural_Cluster_Name(ind_old) = DATA.Natural_Cluster_Name(index);
 end
 DATA.Natural_Cluster_Name = DATA.Natural_Cluster_Name';
-figure(1);
-ind1 = find(DATA.Natural_Cluster_Name == 1);
-ind2 = find(DATA.Natural_Cluster_Name == 2);
-ind3 = find(DATA.Natural_Cluster_Name == 3);
-ind4 = find(DATA.Natural_Cluster_Name == 4);
-plot3(DATA.Coordinate(ind1,1),DATA.Coordinate(ind1,2),DATA.Coordinate(ind1,3),'r.',DATA.Coordinate(ind2,1),DATA.Coordinate(ind2,2),DATA.Coordinate(ind2,3),'g.',DATA.Coordinate(ind3,1),DATA.Coordinate(ind3,2),DATA.Coordinate(ind3,3),'b.',DATA.Coordinate(ind4,1),DATA.Coordinate(ind4,2),DATA.Coordinate(ind4,3),'y.'); 
+%figure(1);
+%ind1 = find(DATA.Natural_Cluster_Name == 1);
+%ind2 = find(DATA.Natural_Cluster_Name == 2);
+%ind3 = find(DATA.Natural_Cluster_Name == 3);
+%ind4 = find(DATA.Natural_Cluster_Name == 4);
+%plot3(DATA.Coordinate(ind1,1),DATA.Coordinate(ind1,2),DATA.Coordinate(ind1,3),'r.',DATA.Coordinate(ind2,1),DATA.Coordinate(ind2,2),DATA.Coordinate(ind2,3),'g.',DATA.Coordinate(ind3,1),DATA.Coordinate(ind3,2),DATA.Coordinate(ind3,3),'b.',DATA.Coordinate(ind4,1),DATA.Coordinate(ind4,2),DATA.Coordinate(ind4,3),'y.'); 
 
