@@ -38,4 +38,8 @@ for i = 1:20
     ind_old = ((i-1)*10000+1):(i*10000);
     DATA(ind_old , :) = DATA(index , :);
 end
-plot3(DATA(1:1000,1),DATA(1:1000,2),DATA(1:1000,3),'r.','MarkerSize',0.5);
+for i = 1 : 20
+    plot3(DATA(10000*(i-1)+1:10000*i,1),DATA(10000*(i-1)+1:10000*i,2),DATA(10000*(i-1)+1:10000*i,3),'r.','MarkerSize',0.5);
+    pause(1);
+end
+
