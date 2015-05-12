@@ -1,7 +1,7 @@
 This program is established by XiongQI.
 
 DATA:
-This directory has saved the data that you can used for this program.
+This directory has saved the data that you can use for this program.
 The directory "/DATA" saves the data file ,and I have generated three sets of data.
 The directory "/DataGenerate" saves the program that you can change the parameter sigma to generate more
 data.Even you can revise the DotGenerate to change the shape and distribution of these clusters.Generally 
