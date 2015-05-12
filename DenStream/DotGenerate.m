@@ -1,5 +1,5 @@
 mu = zeros(3,1);
-DATA = zeros(200000 , 3);
+DATA.Coordinate = zeros(200000 , 3);
 for time = 1 : 20
     for i = 1 : 60
         x = (21-time)*sin(i*pi/30)+21-time;
@@ -31,15 +31,15 @@ mu = mu';
 for i = 1 : 4000
     MU = mu(i,:) ;
     SIGMA = [1 0 0 ; 0 1 0 ; 0 0 1] ;
-    DATA( (i*50 - 49): (i*50), :) = mvnrnd(MU,SIGMA,50);
+    DATA.Coordinate( (i*50 - 49): (i*50), :) = mvnrnd(MU,SIGMA,50);
 end
 for i = 1:20
     index = (i-1)*10000 + randperm(10000);
     ind_old = ((i-1)*10000+1):(i*10000);
-    DATA(ind_old , :) = DATA(index , :);
+    DATA.Coordinate(ind_old , :) = DATA.Coordinate(index , :);
 end
 for i = 1 : 20
-    plot3(DATA(10000*(i-1)+1:10000*i,1),DATA(10000*(i-1)+1:10000*i,2),DATA(10000*(i-1)+1:10000*i,3),'r.','MarkerSize',0.5);
+    plot3(DATA.Coordinate(10000*(i-1)+1:10000*i,1),DATA.Coordinate(10000*(i-1)+1:10000*i,2),DATA.Coordinate(10000*(i-1)+1:10000*i,3),'r.','MarkerSize',0.5);
     pause(1);
 end
 
