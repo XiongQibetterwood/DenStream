@@ -13,8 +13,6 @@ WEIGHT_MU = weightMu;
 RATE_BETA = rateBeta;
 LAMBDA = lambda;
 dimension = min(size(DATA(1).Coordinate));
+Point = PointInput(DATA);
 
-point = InputPoint(DATA,haveDoneFlag);
-[pClusterMicro,oClusterMicro] = Merge(point);
-[pClusterMicro,oClusterMicro] = Update(pClusterMicro,oClusterMicro);
 
