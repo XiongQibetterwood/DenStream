@@ -1,5 +1,5 @@
-classdef OMC
-    %OMC Summary of this class goes here
+classdef OMCGroup
+    %OMCGROUP Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
