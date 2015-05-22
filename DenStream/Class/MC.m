@@ -28,15 +28,15 @@ classdef MC < handle
             obj.c = obj.CF1/obj.weight;
             obj.r = sqrt(obj.CF2/obj.weight-(obj.CF1/obj.weight)^2);
         end
-        function Temp = SaveDate(obj)
+        function Temp = SaveData(obj)
             Temp.weight = obj.weight;
             Temp.CF1 = obj.CF1;
             Temp.CF2 = obj.CF2;
         end
-        function obj = Recover(obj)
-            obj.weight = Time.weight;
-            obj.CF1 = Time.CF1;
-            obj.CF2 = Time.CF2;
+        function Recover(obj,Temp)
+            obj.weight = Temp.weight;
+            obj.CF1 = Temp.CF1;
+            obj.CF2 = Temp.CF2;
             clear Temp;
         end
             

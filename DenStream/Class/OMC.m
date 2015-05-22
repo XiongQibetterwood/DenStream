@@ -2,7 +2,7 @@ classdef OMC < MC
     %OMC Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties (Access = {?PMC,?OMC,?PointFactory})
+    properties
         flag;
         createTime;
     end

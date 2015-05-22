@@ -6,7 +6,7 @@ classdef PointInput < handle
         DATA;
 %        haveDoneFlag;   %听众句柄，接受处理完成的消息
     end
-    properties (Hidden = true,Access = private)
+    properties (Hidden = true,SetAccess = private)
         dimension;
     end
         
