@@ -10,15 +10,19 @@ classdef Group
     
     methods
         function obj = Group()
-            obj.group(1) = [];
+            obj.group(1,:) = [];
             obj.MCNumber = 0;
         end
         function obj = AddMC(obj,MC)
             obj.MCNumber = obj.MCNumber + 1;
-            obj.group(obj.MCNumber).microCluster = MC;
+            obj.group(obj.MCNumber,:).microCluster = MC;
+            obj.groupMatrix = [obj.groupMatrix;MC.c];
+        end
+        function obj = DeleteMC(obj,index)
+            obj.group(index,:) = [];
+            obj.groupMatrix(index,:) = [];
         end
             
     end
     
 end
-
