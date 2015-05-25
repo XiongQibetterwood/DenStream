@@ -2,7 +2,7 @@ classdef Parameter
     %PARAMETER Summary of this class goes here
     %   Detailed explanation goes here
     
-    properties (SetAccess = private)
+    properties (SetAccess = private,GetAccess = public)
         RADIUS_EPSILON;
         WEIGHT_MU;
         RATE_BETA;

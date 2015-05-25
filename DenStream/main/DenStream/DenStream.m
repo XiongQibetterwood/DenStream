@@ -7,11 +7,12 @@ for i = 1:max(size(DATA))
     time = Point(1).Time;
     for j = 1 : max(size(Point))
         point = Point(j);
-        PointFactory(point,pmcGroup);
-        if PointFactory.status == 0
-            PointFactory(point,omcGroup);
-            if PointFactory.status == 0
-                PointFactory(point,omcGroup);
+        pointFactory = PointFactory(pmcGroup,omcGroup,PARA);
+        pointFactory.PMerge(point);
+        if pointFactory.status == 0
+            pointFactory.OMerge(point);
+            if pointFactory.status == 0
+                pointFactory.CreateOMC(point)
             end
         end
     end
