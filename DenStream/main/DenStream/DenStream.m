@@ -7,11 +7,11 @@ for i = 1:max(size(DATA))
     time = Point(1).Time;
     for j = 1 : max(size(Point))
         point = Point(j);
-        pmcGroup = PointFactory(point,pmcGroup);
+        PointFactory(point,pmcGroup);
         if PointFactory.status == 0
-            omcGroup = PointFactory(point,omcGroup);
+            PointFactory(point,omcGroup);
             if PointFactory.status == 0
-                omcGroup = PointFactory(point,omcGroup);
+                PointFactory(point,omcGroup);
             end
         end
     end

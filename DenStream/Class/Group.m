@@ -22,6 +22,10 @@ classdef Group < handle
             obj.group(index,:) = [];
             obj.groupMatrix(index,:) = [];
         end
+        function obj = RenewMC(obj,index)
+            MC = obj.group(index,:).microCluster;
+            obj.groupMatrix(index,:) = MC.c;
+        end
             
     end
     
