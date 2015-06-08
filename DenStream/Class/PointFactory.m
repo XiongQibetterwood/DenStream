@@ -20,7 +20,7 @@ classdef PointFactory < handle
             if obj.pmcGroup.MCNumber == 0
                 obj.status = 0;
             else
-                [rp,index] = min(sqrt(sum((bsxfun( @minus,obj.pmcGroup.groupMatrix,point.Coordinate).^2),2)));
+                [~,index] = min(sqrt(sum((bsxfun( @minus,obj.pmcGroup.groupMatrix,point.Coordinate).^2),2)));
                 cluster = obj.pmcGroup.group(index).microCluster;
                 temp = cluster.SaveData;
                 cluster = cluster.Renew(point);
@@ -30,7 +30,7 @@ classdef PointFactory < handle
                     obj.status = 1;
                 else
                     cluster = cluster.Recover(temp);
-                    cluster = cluster.CalulateC_R;
+                    cluster = cluster.CalculateC_R;
                     if obj.pmcGroup.group(index).microCluster ~= cluster
                         error('Potentiel micro cluster:wrong');
                     end
@@ -42,7 +42,7 @@ classdef PointFactory < handle
             if obj.omcGroup.MCNumber == 0
                 obj.status = 0;
             else 
-                [rp,index] = min(sqrt(sum((bsxfun(@minus,obj.omcGroup.groupMatrix,point.Coordinate).^2),2)));
+                [~,index] = min(sqrt(sum((bsxfun(@minus,obj.omcGroup.groupMatrix,point.Coordinate).^2),2)));
                 cluster = obj.omcGroup.group(index).microCluster;
                 temp = cluster.SaveData;
                 cluster = cluster.Renew(point);
@@ -50,10 +50,19 @@ classdef PointFactory < handle
                 if cluster.r <= obj.PARA.RADIUS_EPSILON
                     obj.omcGroup.groupMatrix(index,:) = cluster.c;
                     obj.status = 1;
+                    if cluster.weight >= obj.PARA.WEIGHT_MU
+                        newPMC = PMC;
+                        newPMC.CF1 = cluster.CF1;
+                        newPMC.CF2 = cluster.CF2;
+                        newPMC.weight = cluster.weight;
+                        newPMC = newPMC.CalculateC_R;
+                        obj.pmcGroup = obj.pmcGroup.AddMC(newPMC);
+                        obj.omcGroup = obj.omcGroup.DeleteMC(index);
+                    end
                 else
                     cluster = cluster.Recover(temp);
                     cluster = cluster.CalculateC_R;
-                    if obj.omcGroup.group(index).microCluster ~=cluster
+                    if obj.omcGroup.group(index).microCluster ~= cluster
                         error('Outlier micro cluster:wrong');
                     end
                     obj.status = 0;

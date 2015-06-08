@@ -28,7 +28,7 @@ classdef MC < handle
         end
         function obj = CalculateC_R(obj)
             obj.c = obj.CF1/obj.weight;
-            obj.r = sqrt(obj.CF2/obj.weight-(sum(obj.CF1/obj.weight).^2));
+            obj.r = sqrt(abs(obj.CF2/obj.weight-(sum(obj.CF1/obj.weight).^2)));
         end
         function Temp = SaveData(obj)
             Temp.weight = obj.weight;

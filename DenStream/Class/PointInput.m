@@ -4,8 +4,8 @@ classdef PointInput < handle
     
     properties
         DATA;
-%        haveDoneFlag;   %听众句柄，接受处理完成的消息
     end
+    
     properties (Hidden = true,SetAccess = private)
         dimension;
     end

@@ -12,9 +12,9 @@ for i = 1:max(size(DATA))
         pointFactory = pointFactory.PMerge(point);
         if pointFactory.status == 0
             pointFactory = pointFactory.OMerge(point);
-            if pointFactory.status == 0
-                pointFactory = pointFactory.CreateOMC(point);
-            end
+        end
+        if pointFactory.status == 0
+            pointFactory = pointFactory.CreateOMC(point);
         end
     end
 end
