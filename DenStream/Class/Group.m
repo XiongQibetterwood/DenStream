@@ -19,6 +19,7 @@ classdef Group < handle
             obj.groupMatrix = [obj.groupMatrix;MC.c];
         end
         function obj = DeleteMC(obj,index)
+            obj.MCNumber = obj.MCNumber - 1;
             obj.group(index,:) = [];
             obj.groupMatrix(index,:) = [];
         end

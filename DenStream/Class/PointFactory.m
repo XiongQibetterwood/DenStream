@@ -75,7 +75,7 @@ classdef PointFactory < handle
             omc.weight = 1;
             omc.createTime = point.Time;
             omc.CF1 = point.Coordinate;
-            omc.CF2 =  0;
+            omc.CF2 = (point.Coordinate).^2;
             omc = omc.CalculateC_R;
             obj.omcGroup = obj.omcGroup.AddMC(omc);
         end
