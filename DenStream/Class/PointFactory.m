@@ -38,7 +38,7 @@ classdef PointFactory < handle
                 end
             end
         end
-        function obj = OMerge(obj,point)
+        function obj = OMerge(obj,point,time)
             if obj.omcGroup.MCNumber == 0
                 obj.status = 0;
             else 
@@ -56,6 +56,7 @@ classdef PointFactory < handle
                         newPMC.CF2 = cluster.CF2;
                         newPMC.weight = cluster.weight;
                         newPMC = newPMC.CalculateC_R;
+                        newPMC.createTime = time;
                         obj.pmcGroup = obj.pmcGroup.AddMC(newPMC);
                         obj.omcGroup = obj.omcGroup.DeleteMC(index);
                     end
@@ -69,15 +70,25 @@ classdef PointFactory < handle
                 end
             end
         end
-        function obj = CreateOMC(obj,point)
+        function obj = CreateOMC(obj,point,time)
             obj.status = 1;
             omc = OMC;
             omc.weight = 1;
-            omc.createTime = point.Time;
+            omc.createTime = time;
             omc.CF1 = point.Coordinate;
             omc.CF2 = (point.Coordinate).^2;
             omc = omc.CalculateC_R;
             obj.omcGroup = obj.omcGroup.AddMC(omc);
+        end
+        function obj = DecayMC(obj,PARA)
+            omcNumber = length(obj.omcGroup.group);
+            pmcNumber = length(obj.pmcGroup.group);
+            for i = 1 : omcNumber
+                obj.omcGroup.group(i).microCluster.Decay(1,PARA);
+            end
+            for i = 1 : pmcNumber
+                obj.pmcGroup.group(i).microCluster.Decay(1,PARA);
+            end
         end
     end
         

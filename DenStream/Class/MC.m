@@ -19,7 +19,7 @@ classdef MC < handle
             obj.CF2 = obj.CF2 + point.Coordinate.^2;
             obj = obj.CalculateC_R;
         end
-        function obj = Decay(obj,time)
+        function obj = Decay(obj,time,PARA)
             decayRate = 1/(2^(PARA.LAMBDA*time));
             obj.weight = obj.weight*decayRate;
             obj.CF1 = obj.CF1*decayRate;
