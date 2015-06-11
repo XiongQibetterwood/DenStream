@@ -50,7 +50,7 @@ classdef PointFactory < handle
                 if cluster.r <= obj.PARA.RADIUS_EPSILON
                     obj.omcGroup.groupMatrix(index,:) = cluster.c;
                     obj.status = 1;
-                    if cluster.weight >= obj.PARA.WEIGHT_MU
+                    if cluster.weight >= obj.PARA.WEIGHT_MU * obj.PARA.RATE_BETA;
                         newPMC = PMC;
                         newPMC.CF1 = cluster.CF1;
                         newPMC.CF2 = cluster.CF2;
@@ -80,16 +80,52 @@ classdef PointFactory < handle
             omc = omc.CalculateC_R;
             obj.omcGroup = obj.omcGroup.AddMC(omc);
         end
-        function obj = DecayMC(obj,PARA)
+        function obj = P2O(obj,pmc,time)
+            omc = OMC;
+            omc.weight = pmc.weight;
+            omc.createTime = time;
+            omc.CF1 = pmc.CF1;
+            omc.CF2 = pmc.CF2;
+            omc = omc.CalculateC_R;
+            obj.omcGroup = obj.omcGroup.AddMC(omc);            
+        end
+        function obj = DecayMC(obj,PARA,time)
             omcNumber = length(obj.omcGroup.group);
             pmcNumber = length(obj.pmcGroup.group);
+            temp_1 = zeros(1,omcNumber);
+            temp_2 = zeros(1,pmcNumber);
             for i = 1 : omcNumber
-                obj.omcGroup.group(i).microCluster.Decay(1,PARA);
+                microCluster = obj.omcGroup.group(i).microCluster.Decay(1,PARA);
+                microCluster = microCluster.Calculate_W(PARA,time);
+                if(microCluster.minWeight <= microCluster.weight)
+                    microCluster.Decay(1,PARA); 
+                else 
+                    temp_1(i) = i ; 
+                end
+            end
+            while(i ~= 0)
+                if temp_1(i) ~= 0
+                    obj.omcGroup.DeleteMC(i);
+                end
+                i = i - 1;
             end
             for i = 1 : pmcNumber
-                obj.pmcGroup.group(i).microCluster.Decay(1,PARA);
+                microCluster = obj.pmcGroup.group(i).microCluster;
+                if(microCluster.weight > PARA.WEIGHT_MU*PARA.RATE_BETA)
+                    microCluster.Decay(1,PARA);
+                else
+                    temp_2(i) = i;
+                end
             end
+            while(i ~= 0)
+                if temp_2(i) ~= 0
+                    obj = obj.P2O(microCluster,time);
+                    obj.pmcGroup.DeleteMC(i);
+                end
+                i = i - 1;
+            end                   
         end
+        
     end
         
 end

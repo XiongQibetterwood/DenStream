@@ -20,7 +20,7 @@ for i = 1:max(size(DATA))
         end
     end
     %The part "Merge" have done.
-    pointFactory = pointFactory.DecayMC(PARA);
+    pointFactory = pointFactory.DecayMC(PARA,time);
 end
 
 
